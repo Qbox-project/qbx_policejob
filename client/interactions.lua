@@ -49,40 +49,35 @@ local function escortActions()
 end
 
 local function handcuffActions()
-    DisableControlAction(0, 24, true) -- Attack
-    DisableControlAction(0, 257, true) -- Attack 2
-    DisableControlAction(0, 25, true) -- Aim
-    DisableControlAction(0, 263, true) -- Melee Attack 1
-
-    DisableControlAction(0, 45, true) -- Reload
-    DisableControlAction(0, 22, true) -- Jump
-    DisableControlAction(0, 44, true) -- Cover
-    DisableControlAction(0, 37, true) -- Select Weapon
-    DisableControlAction(0, 23, true) -- Also 'enter'?
-
-    DisableControlAction(0, 288, true) -- Disable phone
-    DisableControlAction(0, 289, true) -- Inventory
-    DisableControlAction(0, 170, true) -- Animations
-    DisableControlAction(0, 167, true) -- Job
-
-    DisableControlAction(0, 26, true) -- Disable looking behind
-    DisableControlAction(0, 73, true) -- Disable clearing animation
-    DisableControlAction(2, 199, true) -- Disable pause screen
-
-    DisableControlAction(0, 59, true) -- Disable steering in vehicle
-    DisableControlAction(0, 71, true) -- Disable driving forward in vehicle
-    DisableControlAction(0, 72, true) -- Disable reversing in vehicle
-
-    DisableControlAction(2, 36, true) -- Disable going stealth
-
-    DisableControlAction(0, 264, true) -- Disable melee
-    DisableControlAction(0, 257, true) -- Disable melee
-    DisableControlAction(0, 140, true) -- Disable melee
-    DisableControlAction(0, 141, true) -- Disable melee
-    DisableControlAction(0, 142, true) -- Disable melee
-    DisableControlAction(0, 143, true) -- Disable melee
-    DisableControlAction(0, 75, true)  -- Disable exit vehicle
-    DisableControlAction(27, 75, true) -- Disable exit vehicle
+    lib.disableControls:Add(
+        24, -- Attack
+        257, -- Attack 2
+        25, -- Aim
+        263, -- Melee Attack 1
+        45, -- Reload
+        22, -- Jump
+        44, -- Cover
+        37, -- Select Weapon
+        23, -- Also 'enter'?
+        288, -- Disable phone
+        289, -- Inventory
+        170, -- Animations
+        167, -- Job
+        26, -- Disable looking behind
+        73, -- Disable clearing animation
+        199, -- Disable pause screen
+        59, -- Disable steering in vehicle
+        71, -- Disable driving forward in vehicle
+        72, -- Disable reversing in vehicle
+        36, -- Disable going stealth
+        264, -- Disable melee
+        257, -- Disable melee
+        140, -- Disable melee
+        141, -- Disable melee
+        142, -- Disable melee
+        143, -- Disable melee
+        75  -- Disable exit vehicle
+    )
     EnableControlAction(0, 249, true) -- Added for talking while cuffed
     EnableControlAction(0, 46, true)  -- Added for talking while cuffed
 end
