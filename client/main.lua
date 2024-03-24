@@ -1,24 +1,38 @@
 local config = require 'config.shared'
+local sharedConfig = require 'config.shared'
 cuffType = 1
 isEscorted = false
 IsLoggedIn = LocalPlayer.state.isLoggedIn
 local dutyBlips = {}
+local vehicleBlipMapping = {
+    [15] = 43, -- boats
+    [14] = 427, -- planes
+    [16] = 307, -- motorcycles
+    [8] = 226, -- police vehicles
+    [18] = 56, -- pedestrians
+    [0] = 1, -- unclassified
+}
 
 local function CreateDutyBlips(playerId, playerLabel, playerJob, playerLocation)
     local ped = GetPlayerPed(playerId)
     local blip = GetBlipFromEntity(ped)
+    local classVeh = GetVehicleClass(cache.vehicle)
     if not DoesBlipExist(blip) then
         if NetworkIsPlayerActive(playerId) then
             blip = AddBlipForEntity(ped)
         else
             blip = AddBlipForCoord(playerLocation.x, playerLocation.y, playerLocation.z)
         end
-        SetBlipSprite(blip, 1)
+
+        local blipSprite = vehicleBlipMapping[classVeh] or 225
+        SetBlipSprite(blip, blipSprite)
         ShowHeadingIndicatorOnBlip(blip, true)
+
         SetBlipRotation(blip, math.ceil(playerLocation.w))
         SetBlipScale(blip, 1.0)
-        if playerJob == 'police' then
-            SetBlipColour(blip, 38)
+        if sharedConfig.departments[playerJob] then
+            SetBlipColour(blip, sharedConfig.departments[playerJob].blipcolor)
+            SetBlipShowCone(blip, true)
         else
             SetBlipColour(blip, 5)
         end
@@ -30,8 +44,7 @@ local function CreateDutyBlips(playerId, playerLabel, playerJob, playerLocation)
     end
 
     if GetBlipFromEntity(cache.ped) == blip then
-        -- Ensure we remove our own blip.
-        RemoveBlip(blip)
+        RemoveBlip(blip) -- Ensure we remove our own blip.
     end
 end
 
